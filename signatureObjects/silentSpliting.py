@@ -4,7 +4,7 @@ from pydub import AudioSegment
 from pydub.silence import split_on_silence
 from pydub.playback import play
 import numpy as np
-import pyrubberband as pyrb
+# import pyrubberband as pyrb
 from Signature import Signature
 # Define a function to normalize a chunk to a target amplitude.
 
@@ -21,31 +21,32 @@ class CombinedSignature:
         splits_signature_2: List containing the segments that the 1st signature was split into
         combined_signature: output of the combine function (change which method used to get different results)
     """
-    # stores signatures that need to be combined
-    signature_1 = None
-    signature_2 = None
 
-    # store the two signatures after the splitting method has been executed
-    splits_signature_1 = []
-    splits_signature_2 = []
-
-    # stores resulting combined signatture (i.e., the output of the program)
-    combined_signature = None
-
-    def __init__(self, signature1: str | Signature, signature2: str | Signature):
-        if signature1 is str:
+    def __init__(self, signature1, signature2):
+        if type(signature1) is str and type(signature2) is str:
+            print("entered str")
             try:
+                # stores signatures that need to be combined
                 self.signature_1 = AudioSegment.from_file(signature1)
                 self.signature_2 = AudioSegment.from_file(signature2)
                 if round(self.signature_1.duration_seconds) != round(self.signature_2.duration_seconds):
                     raise AttributeError("Both audiofiles must have the same duration")
             except FileNotFoundError:
                 raise FileNotFoundError("File not Found")
-        elif signature1 is Signature and signature2 is Signature:
-            self.signature_1 = signature1.raw_audio
-            self.signature_2 = signature2.raw_audio
+        elif type(signature1) is Signature and type(signature2) is Signature:
+            print("entered Signature")
+            # stores signatures that need to be combined
+            self.signature_1 = signature1.base_audio
+            self.signature_2 = signature2.base_audio
         else:
             raise TypeError('input type must both either be string (paths) of Signature objects')
+
+        # store the two signatures after the splitting method has been executed
+        self.splits_signature_1 = []
+        self.splits_signature_2 = []
+
+        # stores resulting combined signatture (i.e., the output of the program)
+        self.combined_signature = None
 
     # maybe this: https://stackoverflow.com/questions/682504/what-is-a-clean-pythonic-way-to-implement-multiple-constructors
 
@@ -239,6 +240,8 @@ if __name__ == "__main__":
     # number1, number2 = '033', '020'
     number1, number2 = '034', '050'
     sig1, sig2 = '../signatures/Signature-4_' + number1 + '.mp3', '../signatures/Signature-4_' + number2 + '.mp3'
+    print('type of sig1: ' + str(type(sig1)))
+    print('run "type(sig1) is str": ' + str(type(sig1) is str))
     test = CombinedSignature(sig1, sig2)
     test.execute()
 
