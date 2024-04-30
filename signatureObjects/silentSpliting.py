@@ -3,7 +3,9 @@
 from pydub import AudioSegment
 from pydub.silence import split_on_silence
 from pydub.playback import play
-
+import numpy as np
+import pyrubberband as pyrb
+from Signature import Signature
 # Define a function to normalize a chunk to a target amplitude.
 
 
@@ -27,17 +29,25 @@ class CombinedSignature:
     splits_signature_1 = []
     splits_signature_2 = []
 
-    #stores resulting combined signatture (i.e., the output of the program)
+    # stores resulting combined signatture (i.e., the output of the program)
     combined_signature = None
 
-    def __init__(self, signature1, signature2):
-        try:
-            self.signature_1 = AudioSegment.from_file(signature1)
-            self.signature_2 = AudioSegment.from_file(signature2)
-            if round(self.signature_1.duration_seconds) != round(self.signature_2.duration_seconds):
-                raise AttributeError("Both audiofiles must have the same duration")
-        except FileNotFoundError:
-            raise FileNotFoundError("File not Found")
+    def __init__(self, signature1: str | Signature, signature2: str | Signature):
+        if signature1 is str:
+            try:
+                self.signature_1 = AudioSegment.from_file(signature1)
+                self.signature_2 = AudioSegment.from_file(signature2)
+                if round(self.signature_1.duration_seconds) != round(self.signature_2.duration_seconds):
+                    raise AttributeError("Both audiofiles must have the same duration")
+            except FileNotFoundError:
+                raise FileNotFoundError("File not Found")
+        elif signature1 is Signature and signature2 is Signature:
+            self.signature_1 = signature1.raw_audio
+            self.signature_2 = signature2.raw_audio
+        else:
+            raise TypeError('input type must both either be string (paths) of Signature objects')
+
+    # maybe this: https://stackoverflow.com/questions/682504/what-is-a-clean-pythonic-way-to-implement-multiple-constructors
 
     def __str__(self):
         return str(self.__dict__)
@@ -75,6 +85,19 @@ class CombinedSignature:
         self.splits_signature_1 = method(self, self.signature_1)
         self.splits_signature_2 = method(self, self.signature_2)
 
+    def _audio_speed(self, audiosegment, speed=1.0):
+        y = np.array(audiosegment.get_array_of_samples())
+        if audiosegment.channels == 2:
+            y = y.reshape((-1, 2))
+
+        sample_rate = audiosegment.frame_rate
+        y_fast = pyrb.time_stretch(y, sample_rate, speed)
+
+        channels = 2 if (y_fast.ndim == 2 and y_fast.shape[1] == 2) else 1
+        y = np.int16(y_fast * 2 ** 15)
+
+        return AudioSegment(y.tobytes(), frame_rate=sample_rate, sample_width=2, channels=channels)
+
     def _combine_method_1(self, split_1: list[AudioSegment], split_2: list[AudioSegment]):
         """Take two split signatures, and tries to choose the combination that is as
         close as half as possible, then combine those, and normalize their length
@@ -82,77 +105,92 @@ class CombinedSignature:
         Args:
             split_1: 1st split audio segments
             split_2: 2nd spit audio segments
+
+        TODO:
+            currently, if forward and backward tally are the same, the first is chosen
+            since it executes first. You may want slightly different behavior.
         """
+        # NOTE : These are for testing purposes (don't know how to mock objects in python yet)
+        # lengths_1 = [2, 2, 0.25, 4.75]
+        # lengths_2 = [2, 2, 2, 2, 2]
         lengths_1 = [len(v) / 1000 for v in split_1]
         lengths_2 = [len(v) / 1000 for v in split_2]
+
         half = sum([len(v) / 1000 for v in split_2]) / 2
-        print(lengths_1)
-        print(lengths_2)
-        print(half)
 
         # Find what is the closest the segments gets to the half-way point
+        # NOTE: python doesn't have a do-while loop, so had to jank it
         forward_tally_1 = 0
         forward_prev_1 = 0
         forward_iter_1 = 0
-        while forward_tally_1 < half:
+        while True:
             forward_prev_1 = forward_tally_1
             forward_tally_1 += lengths_1[forward_iter_1]
             forward_iter_1 += 1
+            if forward_tally_1 >= half:
+                break
 
         forward_tally_2 = 0
         forward_prev_2 = 0
         forward_iter_2 = 0
-        while forward_tally_2 < half:
+        while True:
             forward_prev_2 = forward_tally_2
             forward_tally_2 += lengths_2[forward_iter_2]
             forward_iter_2 += 1
+            if forward_tally_2 >= half:
+                break
 
         backward_tally_1 = 0
         backward_prev_1 = 0
         backward_iter_1 = 1
-        while backward_tally_1 < half:
+        while True:
             backward_prev_1 = backward_tally_1
             backward_tally_1 += lengths_1[-backward_iter_1]
             backward_iter_1 += 1
+            if backward_tally_1 >= half:
+                break
 
         backward_tally_2 = 0
         backward_prev_2 = 0
         backward_iter_2 = 1
-        while backward_tally_2 < half:
+        while True:
             backward_prev_2 = backward_tally_2
             backward_tally_2 += lengths_2[-backward_iter_2]
             backward_iter_2 += 1
+            if backward_tally_2 >= half:
+                break
 
         # conditionals for finding the best splitting
         all_options_1 = [forward_tally_1, forward_prev_1, backward_tally_1, backward_prev_1]
         min_val_1 = min(all_options_1, key=lambda x: abs(x - half))
 
-        # TODO: Now that you know where to split the signatures, combine the segments.
         if min_val_1 == forward_tally_1:
-            print('best split for split_1 is forward_tally_1: ' + str(forward_tally_1))
-            part_1 = sum(split_1[0:iter])
+            part_1 = sum(split_1[0:forward_iter_1])
         elif min_val_1 == forward_prev_1:
-            print('best split for split_1 is forward_prev_1: ' + str(forward_prev_1))
-            part_1 = sum(split_1[0:(iter - 1)])
+            part_1 = sum(split_1[0:forward_iter_1 - 1])
         elif min_val_1 == backward_tally_1:
-            print('best split for split_1 is backward_tally_1: ' + str(backward_tally_1))
-            part_1 = sum(split_1[-1:-iter])
+            part_1 = sum(split_1[-backward_iter_1 + 1:])
         else:
-            print('best split for split_1 is backward_prev_1: ' + str(backward_tally_1))
+            part_1 = sum(split_1[-backward_iter_1 + 2:])
 
         all_options_2 = [forward_tally_2, forward_prev_2, backward_tally_2, backward_prev_2]
         min_val_2 = min(all_options_2, key=lambda x: abs(x - half))
 
         if min_val_2 == forward_tally_2:
-            print('best split for split_2 is forward_tally_2: ' + str(forward_tally_2))
+            part_2 = sum(split_2[0:forward_iter_2])
         elif min_val_2 == forward_prev_2:
-            print('best split for split_2 is forward_prev_2: ' + str(forward_prev_2))
+            part_2 = sum(split_2[0:forward_iter_2 - 1])
         elif min_val_2 == backward_tally_2:
-            print('best split for split_2 is backward_tally_2: ' + str(backward_tally_2))
+            part_2 = sum(split_2[-backward_iter_2 + 1:])
         else:
-            print('best split for split_2 is backward_prev_2: ' + str(backward_prev_2))
+            part_2 = sum(split_2[-backward_iter_2 + 2:])
 
         # TODO: normalize the lengths so that they are each half length
+        # normalized_1 = self._audio_speed(part_1, part_1.duration_seconds / half)
+        # normalized_2 = self._audio_speed(part_2, part_2.duration_seconds / half)
+
+        self.combined_signature = part_1 + part_2
+        # self.combined_signature = normalized_1 + normalized_2
 
         # TODO: Combine normalized_part_1 and normalized_part_2
     def _combine_method_2(self, split_1: list[AudioSegment], split_2: list[AudioSegment]):
@@ -203,9 +241,10 @@ if __name__ == "__main__":
     sig1, sig2 = '../signatures/Signature-4_' + number1 + '.mp3', '../signatures/Signature-4_' + number2 + '.mp3'
     test = CombinedSignature(sig1, sig2)
     test.execute()
-    play(test.combined_signature)
-    play(AudioSegment.silent(900))
+
     audio1, audio2 = AudioSegment.from_file(sig1), AudioSegment.from_file(sig2)
     play(audio1)
     play(AudioSegment.silent(500))
     play(audio2)
+    play(AudioSegment.silent(900))
+    play(test.combined_signature)
