@@ -1,4 +1,4 @@
-This is from the google colab:
+This is from the google Colab:
 ``` python
 !python3 -m pip install -U git+https://github.com/facebookresearch/audiocraft#egg=audiocraft
 # !python3 -m pip install -U audiocraft
@@ -43,3 +43,13 @@ torch.cuda.empty_cache()
 ```
 
 This has to be put be wrapped behind a class
+# variables and methods
+var
+
+duration = 10
+model = melody
+
+
+method
+
+createSignature

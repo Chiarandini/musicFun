@@ -1,5 +1,3 @@
-
-
 # insure everything that is needed is imported
 from pydub import AudioSegment
 from audiocraft.models import musicgen
@@ -9,7 +7,6 @@ import torch
 import torchaudio
 import gc
 from audiocraft.models import MultiBandDiffusion
-mbd = MultiBandDiffusion.get_mbd_musicgen()
 
 
 class AI(object):
@@ -17,11 +14,13 @@ class AI(object):
     model_type = 'melody'
     model = musicgen.MusicGen.get_pretrained('melody', device='cuda')
     model.set_generation_params(duration=duration)
+    mbd = MultiBandDiffusion.get_mbd_musicgen()
 
     @staticmethod
     def CreateSignature(signature: Signature, description: str) -> AudioSegment:
-        melody_waveform, sr = torchaudio.load("Signature-4_016-withSilence.wav")
-        melody_waveform = melody_waveform.unsqueeze(0).repeat(8, 1, 1)
+        # HACK: This is a BAD solution for importing since the path is RELATIVE. Fix this
+        melody_waveform, sr = torchaudio.load(signature.path)
+        melody_waveform = melody_waveform.unsqueeze(0).repeat(1, 1, 1)
         output = AI.model.generate_with_chroma(
             descriptions=[description],
             melody_wavs=melody_waveform,
@@ -29,10 +28,10 @@ class AI(object):
             progress=True, return_tokens=True
         )
         # display_audio(output[0], sample_rate=32000)
-        out_diffusion = mbd.tokens_to_wav(output[1])
+        out_diffusion = AI.mbd.tokens_to_wav(output[1])
         # display_audio(out_diffusion, sample_rate=32000)
 
-        #memory is an issue
+        # memory is an issue
         gc.collect()
         torch.cuda.empty_cache()
         return out_diffusion

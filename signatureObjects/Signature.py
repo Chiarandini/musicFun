@@ -13,21 +13,23 @@ class Signature:
         signature: the processed audio information
         text_prompt: The text-prompt used to generate the signature
     """
-    # raw audio file saved
-    base_audio = None
-
-    # Processed Signature (Post AI)
-    signature = None
-
-    # text prompt used to generate signature
-    text_prompt = ''
-
-    # The text used to help find the right signature
-    raw_audio_description = ''
 
     def __init__(self, path: str, description: str = ''):
+        # raw audio file saved
         self.base_audio = AudioSegment.from_file(path)
+
+        # description acompanying audio file
         self.raw_audio_description = description
+
+        # text prompt used to generate signature
+        self.text_promt = ''
+
+        # Processed Signature (Post AI)
+        self.signature = None
+
+        # HACK: This REALLY shouldn't be here. temporary hack for AI object!
+        # original path
+        self.path = path
 
     def __str__(self):
         return str(self.__dict__)
