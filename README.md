@@ -1,1 +1,1 @@
-Holds all info on music generation <3
+Holds all info on music generation
