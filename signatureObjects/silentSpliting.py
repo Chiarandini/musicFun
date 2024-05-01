@@ -236,12 +236,10 @@ class CombinedSignature:
 
 
 if __name__ == "__main__":
-    # number1, number2 = '001', '002'
+    number1, number2 = '001', '002'
     # number1, number2 = '033', '020'
-    number1, number2 = '034', '050'
+    # number1, number2 = '034', '050'
     sig1, sig2 = '../signatures/Signature-4_' + number1 + '.mp3', '../signatures/Signature-4_' + number2 + '.mp3'
-    print('type of sig1: ' + str(type(sig1)))
-    print('run "type(sig1) is str": ' + str(type(sig1) is str))
     test = CombinedSignature(sig1, sig2)
     test.execute()
 
