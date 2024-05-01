@@ -4,7 +4,9 @@ from audiocraft.models import musicgen
 from audiocraft.utils.notebook import display_audio
 from signatureObjects.Signature import Signature
 import torch
+import numpy as np
 import torchaudio
+from pydub.utils import mediainfo
 import gc
 from audiocraft.models import MultiBandDiffusion
 
@@ -18,8 +20,8 @@ class AI(object):
 
     @staticmethod
     def CreateSignature(signature: Signature, description: str) -> AudioSegment:
-        # HACK: This is a BAD solution for importing since the path is RELATIVE. Fix this
-        melody_waveform, sr = torchaudio.load(signature.path)
+        melody_waveform = torch.from_numpy(np.array(signature.signature.get_array_of_samples()))
+        sr = signature.signature.frame_rate
         melody_waveform = melody_waveform.unsqueeze(0).repeat(1, 1, 1)
         output = AI.model.generate_with_chroma(
             descriptions=[description],

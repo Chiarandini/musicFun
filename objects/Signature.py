@@ -1,5 +1,4 @@
-
-
+from typing import NewType
 from pydub import AudioSegment
 
 
@@ -25,7 +24,7 @@ class Signature:
         self.text_promt = ''
 
         # Processed Signature (Post AI)
-        self.signature = None
+        self.signature: AudioSegment
 
         # HACK: This REALLY shouldn't be here. temporary hack for AI object!
         # original path

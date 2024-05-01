@@ -4,8 +4,8 @@ from pydub import AudioSegment
 from pydub.silence import split_on_silence
 from pydub.playback import play
 import numpy as np
-# import pyrubberband as pyrb
-from Signature import Signature
+import pyrubberband as pyrb
+from ..objects.Signature import Signature
 # Define a function to normalize a chunk to a target amplitude.
 
 
