@@ -5,7 +5,7 @@ from pydub.silence import split_on_silence
 from pydub.playback import play
 import numpy as np
 import pyrubberband as pyrb
-from ..objects.Signature import Signature
+from signatureClass import signatureClass
 # Define a function to normalize a chunk to a target amplitude.
 
 
@@ -235,17 +235,17 @@ class CombinedSignature:
             )
 
 
-if __name__ == "__main__":
-    number1, number2 = '001', '002'
-    # number1, number2 = '033', '020'
-    # number1, number2 = '034', '050'
-    sig1, sig2 = '../signatures/Signature-4_' + number1 + '.mp3', '../signatures/Signature-4_' + number2 + '.mp3'
-    test = CombinedSignature(sig1, sig2)
-    test.execute()
+# if __name__ == "__main__":
+#     number1, number2 = '001', '002'
+#     # number1, number2 = '033', '020'
+#     # number1, number2 = '034', '050'
+#     sig1, sig2 = '../signatures/Signature-4_' + number1 + '.mp3', '../signatures/Signature-4_' + number2 + '.mp3'
+#     test = CombinedSignature(sig1, sig2)
+#     test.execute()
 
-    audio1, audio2 = AudioSegment.from_file(sig1), AudioSegment.from_file(sig2)
-    play(audio1)
-    play(AudioSegment.silent(500))
-    play(audio2)
-    play(AudioSegment.silent(900))
-    play(test.combined_signature)
+#     audio1, audio2 = AudioSegment.from_file(sig1), AudioSegment.from_file(sig2)
+#     play(audio1)
+#     play(AudioSegment.silent(500))
+#     play(audio2)
+#     play(AudioSegment.silent(900))
+#     play(test.combined_signature)
