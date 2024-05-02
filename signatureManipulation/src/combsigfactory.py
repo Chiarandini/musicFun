@@ -5,7 +5,7 @@ from pydub.silence import split_on_silence
 from pydub.playback import play
 import numpy as np
 import pyrubberband as pyrb
-from signatureClass import signatureClass
+from classes.Signature import Signature
 # Define a function to normalize a chunk to a target amplitude.
 
 
@@ -85,6 +85,8 @@ class CombinedSignature:
         """
         self.splits_signature_1 = method(self, self.signature_1)
         self.splits_signature_2 = method(self, self.signature_2)
+
+# combine
 
     def _audio_speed(self, audiosegment, speed=1.0):
         y = np.array(audiosegment.get_array_of_samples())

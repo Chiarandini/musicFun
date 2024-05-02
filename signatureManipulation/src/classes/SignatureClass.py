@@ -1,6 +1,6 @@
 from pydub import AudioSegment
-from AudioClass import AudioClass
-from UserClass import UserClass
+from classes.AudioClass import AudioClass
+from classes.UserClass import UserClass
 
 class SignatureClass:
 
@@ -15,9 +15,9 @@ class SignatureClass:
     """
 
 #TODO: update once user object is created
-    def __init__(self, raw_audio: AudioClass, signature_audio: AudioSegment, user: UserClass, ai_prompt: str =''):
+    def __init__(self, audio_obj: AudioClass, signature_audio: AudioSegment, user: UserClass, ai_prompt: str =''):
         # raw audio file object
-        self.raw_audio = raw_audio
+        self.audio_obj = audio_obj
 
         # the AI-modified audio
         self.signature_audio = signature_audio

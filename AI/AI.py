@@ -19,12 +19,12 @@ class AI(object):
     mbd = MultiBandDiffusion.get_mbd_musicgen()
 
     @staticmethod
-    def CreateSignature(signature: Signature, description: str) -> AudioSegment:
+    def CreateSignature(signature: Signature, description: list[str]) -> AudioSegment:
         melody_waveform = torch.from_numpy(np.array(signature.signature.get_array_of_samples()))
         sr = signature.signature.frame_rate
         melody_waveform = melody_waveform.unsqueeze(0).repeat(1, 1, 1)
         output = AI.model.generate_with_chroma(
-            descriptions=[description],
+            descriptions=description,
             melody_wavs=melody_waveform,
             melody_sample_rate=sr,
             progress=True, return_tokens=True
