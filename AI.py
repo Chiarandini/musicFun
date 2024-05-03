@@ -53,7 +53,7 @@ class Ai(object):
 # 'EDM Electronic',
 # 'superb EDM Electronic',
 
-melody_waveform, sr = torchaudio.load("Signature-4_016-withSilence.wav")
+# melody_waveform, sr = torchaudio.load("Signature-4_016-withSilence.wav")
 # print(melody_waveform)
 # melody_wa
 # melody_waveform = melody_waveform.unsqueeze(0).repeat(8, 1, 1)

@@ -44,12 +44,14 @@ base_signature_name = random.choice(os.listdir("musicFun/signatures/"))  # chang
 print('chosen base signature: ' + base_signature_name)
 
 # WARN: Currently, base-signatures have no descriptions
-audio = Audio(AudioSegment.from_file('signatures/' + base_signature_name), '')
+audio = Audio(AudioSegment.from_file('musicFun/signatures/' + base_signature_name), '')
 
 # 5. Use ai to get signature
 print("5. create signature (using AI)")
 # NOTE: This needs to be done on google colab atm
 sig_audio = Ai.CreateSignature(audio, [ai_prompt])
+
+sig_audio.export('sig1.mp3', format='mp3')
 
 # 6. Create signature object
 print("6. create signature object")
@@ -63,20 +65,26 @@ print(signature1)
 print("7. generate another signature")
 base_signature_name = random.choice(os.listdir("musicFun/signatures/"))  # change dir name to
 print('chosen base signature: ' + base_signature_name)
-audio = Audio(AudioSegment.from_file('signatures/' + base_signature_name), '')
+audio2 = Audio(AudioSegment.from_file('musicFun/signatures/' + base_signature_name), '')
+sig_audio2 = Ai.CreateSignature(audio2, [ai_prompt])
+sig_audio2.export('sig2.mp3', format='mp3')
 user = User(responses)
-signature2 = Signature(audio, audio.raw_audio, user, ai_prompt)
+signature2 = Signature(audio, sig_audio2, user, ai_prompt)
 
 # 8. create combined signature
 
 print("8. combine signatures")
 combine_sig_factory = CombineSignatureFactory(signature1, signature2)
 
-combined_sig = combine_sig_factory.build()
+combined_sig_base = combine_sig_factory.build()
 
-print(combined_sig)
+combined_sig = Ai.CreateSignature(Audio(combined_sig_base.combined_signature.audio_obj.raw_audio, ''),
+                                  [ai_prompt])
 
-play(combined_sig.combined_signature.audio_obj.raw_audio)
+
+combined_sig.export('./result.mp3', format='mp3')
+
+play(combined_sig_base.combined_signature.audio_obj.raw_audio)
 
 # save all results to the database
 # WARN: not implemented yet.
