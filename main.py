@@ -1,5 +1,5 @@
 import json
-from AudioClass import AudioSegment
+from pydub import AudioSegment
 from promptGenerator import response_to_prompt
 from getUserInput import ask_user
 from SignatureClass import Signature
