@@ -1,11 +1,7 @@
 import random
-import json
-
-with open("json_files/prompts.json", "r") as file:
-    all_prompts = json.load(file)
 
 
-def response_to_prompt(user_responses):
+def response_to_prompt(user_responses, all_prompts):
     prompt_words = []
     for question in user_responses:
         response = user_responses[question][0]

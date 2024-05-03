@@ -1,16 +1,16 @@
 import json
-from classes.AudioClass import AudioSegment
-from scripts.promptGenerator import response_to_prompt
-from scripts.getUserInput import ask_user
-from classes.SignatureClass import Audio, Signature, User
+from AudioClass import AudioSegment
+from promptGenerator import response_to_prompt
+from getUserInput import ask_user
+from SignatureClass import Signature
+from AudioClass import Audio
+from UserClass import User
 from pydub.playback import play
 # from AI import AI
 import os
 import random
 from CombineSignatureFactory import CombineSignatureFactory
 from AI.AI import Ai
-
-import copy
 
 # 1. Connect to databases
 
