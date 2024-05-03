@@ -10,18 +10,18 @@ from pydub.playback import play
 import os
 import random
 from CombineSignatureFactory import CombineSignatureFactory
-from AI.AI import Ai
+from AI import Ai
 
 # 1. Connect to databases
 
 # WARN: This is a substitute for ``connecting to the database''
-with open("src/json_files/questions.json", "r") as file:
+with open("musicFun/src/json_files/questions.json", "r") as file:
     all_questions = json.load(file)
 
-with open("src/json_files/valid_responses.json", "r") as file:
+with open("musicFun/src/json_files/valid_responses.json", "r") as file:
     all_valid_responses = json.load(file)
 
-with open("src/json_files/prompts.json", "r") as file:
+with open("musicFun/src/json_files/prompts.json", "r") as file:
     all_prompts = json.load(file)
 
 
