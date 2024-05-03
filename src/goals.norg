@@ -1,0 +1,54 @@
+* Goals for today
+  ~ ( ) meeting at 1pm with Grieg
+  ~ (x) more empirical experimentation to see how the software a-priori combines melodies (can
+	be useful for tweaking phase). -> more pretty examples for Grieg. Shows that something
+	has been happening (ex. here is the good results, but here are the difficulties that
+	have been going on and are lying ahead).
+  ~ (_) see how the network actually creates its models. Want to know where can extend it to
+  -- Add your own training data
+  -- modify it so that it can take: 2 melodies and 1 number $|\in [-1,1]|$ representing
+	 "prettiness/harmony/melodiousness".
+  ~ (x) Improve signature combination (alternate?)
+  ~ (x) Make a nicer wrapper around it
+  -- You want to be able to select a signature, and create a text-prompt
+  -- You want an API call for it.
+  ~ (-) Make the prompts auto-generate! Need to figure out if want quiz or other
+  ~ (=) Give description to every base signature
+  ~ ( ) figure out if there is a way for the AI to make it sound like it finishes
+  ~ ( ) more Prompt engineering
+  ~ (x) Add prompts to base_signatures
+  ~ ( ) Get what is working so far on Colab
+  ~ (x) rate signatures
+  ~ ( ) Create proper database for storing signature info and adjective info
+  ~ ( ) Figure out server stuff.
+  ~~  ( ) Initialize and put files there
+  ~~  ( ) Create the appropriate API's and keys
+  ~~  ( ) Run it
+  ~ ( ) Create a UI
+
+
+
+
+* ideas
+  - possibly make each signature have a nice "conclusion" (fade out, or musically, etc.)
+  - Instead of AI learning what is unmelodic, just have unmelodic base-cases which we try
+	to figure out how to prompt-engineer to keep it.
+  - For making it disharmonious, play with the base-combination!
+  - Figure out if there is a way for the AI to change the original as little as possible!
+
+
+* interesting prompts
+  - terrible sounding music on piano and guitar played by a toddler
+  - melancholic soft slow romantic piano professional melodic
+  - grand-piano with an energetic player who is proud and alive
+  - soft jazz with light violin tunes
+  - light jazzy violin with soft vibes
+
+* worries
+  - That the AI will produce unreliable results.
+  - I don't want signature to remember the path of the signature, but rn it will be
+	a hacky fix for the AI object to work. FIX THIS!
+  -
+
+* Concretely, how will this run
+  For now, the __init__.py will execute and it will run
