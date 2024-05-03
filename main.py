@@ -36,7 +36,7 @@ print(ai_prompt)
 # 4. Pick a base signature and create audio object
 # NOTE: for now this is random
 
-base_signature_name = random.choice(os.listdir("signatures/"))  # change dir name to
+base_signature_name = random.choice(os.listdir("musicFun/signatures/"))  # change dir name to
 
 print('chosen base signature: ' + base_signature_name)
 
@@ -54,7 +54,7 @@ signature1 = Signature(audio, sig_audio, user, ai_prompt)
 
 # 7. generate another signature
 # NOTE: for now just using same prompt
-base_signature_name = random.choice(os.listdir("signatures/"))  # change dir name to
+base_signature_name = random.choice(os.listdir("musicFun/signatures/"))  # change dir name to
 print('chosen base signature: ' + base_signature_name)
 audio = Audio(AudioSegment.from_file('signatures/' + base_signature_name), '')
 user = User(responses)
