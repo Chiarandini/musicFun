@@ -1,6 +1,6 @@
 from pydub import AudioSegment
-from src.classes.AudioClass import Audio
-from src.classes.UserClass import User
+from AudioClass import Audio
+from UserClass import User
 
 
 class Signature:

@@ -2,8 +2,8 @@
 from audiocraft.models import musicgen
 from audiocraft.utils.notebook import display_audio
 from audiocraft.models import MultiBandDiffusion
-from ..src.classes.SignatureClass import Signature
-from ..src.classes.AudioClass import Audio
+from ..SignatureClass import Signature
+from ..AudioClass import Audio
 from pydub import AudioSegment
 import numpy as np
 import gc

@@ -4,10 +4,10 @@ from pydub.silence import split_on_silence
 # import pyrubberband as pyrb
 
 import numpy as np
-from src.classes.SignatureClass import Signature
-from src.classes.CombinedSignaturesClass import CombinedSignature
-from src.classes.AudioClass import Audio
-# from src.classes.UserClass import User
+from SignatureClass import Signature
+from CombinedSignaturesClass import CombinedSignature
+from AudioClass import Audio
+# from UserClass import User
 
 
 class CombineSignatureFactory:

@@ -1,4 +1,4 @@
-from src.classes.SignatureClass import Signature
+from SignatureClass import Signature
 
 
 class CombinedSignature:
