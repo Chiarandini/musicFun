@@ -24,7 +24,7 @@ class Ai(object):
     def CreateSignature(audio: Audio, description: list[str]) -> AudioSegment:
         melody_waveform = torch.from_numpy(np.array(audio.raw_audio.get_array_of_samples()))
         sr = audio.raw_audio.frame_rate
-        melody_waveform = melody_waveform.unsqueeze(0).repeat(1, 1, 1)
+        melody_waveform = melody_waveform.unsqueeze(0).repeat(len(description), 1, 1)
         output = Ai.model.generate_with_chroma(
             descriptions=description,
             melody_wavs=melody_waveform,
