@@ -1,13 +1,14 @@
 import json
-from src.classes.AudioClass import AudioSegment
-from src.scripts.promptGenerator import response_to_prompt
-from src.scripts.getUserInput import ask_user
-from src.classes.SignatureClass import Audio, Signature, User
+from classes.AudioClass import AudioSegment
+from scripts.promptGenerator import response_to_prompt
+from scripts.getUserInput import ask_user
+from classes.SignatureClass import Audio, Signature, User
 from pydub.playback import play
 # from AI import AI
 import os
 import random
 from CombineSignatureFactory import CombineSignatureFactory
+from AI.AI import Ai
 
 import copy
 
@@ -32,22 +33,23 @@ responses = ask_user(all_questions, all_valid_responses)
 ai_prompt = response_to_prompt(responses, all_prompts)
 print(ai_prompt)
 
-# 4. Pick a base signature
+# 4. Pick a base signature and create audio object
 # NOTE: for now this is random
 
 base_signature_name = random.choice(os.listdir("signatures/"))  # change dir name to
 
 print('chosen base signature: ' + base_signature_name)
 
-# 5. Use ai to get signature
-# NOTE: This needs to be done on google colab atm
-
-# 6. Create signature object
 # WARN: Currently, base-signatures have no descriptions
 audio = Audio(AudioSegment.from_file('signatures/' + base_signature_name), '')
+
+# 5. Use ai to get signature
+# NOTE: This needs to be done on google colab atm
+sig_audio = Ai.CreateSignature(audio, [ai_prompt])
+
+# 6. Create signature object
 user = User(responses)
-# WARN: 2nd input should be ai-procssesd audio
-signature1 = Signature(audio, audio.raw_audio, user, ai_prompt)
+signature1 = Signature(audio, sig_audio, user, ai_prompt)
 
 
 # 7. generate another signature
