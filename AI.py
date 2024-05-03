@@ -8,7 +8,7 @@ from pydub import AudioSegment
 import numpy as np
 import gc
 import torch
-# import torchaudio
+import torchaudio
 # import torchaudio
 # from pydub.utils import mediainfo
 
@@ -22,7 +22,8 @@ class Ai(object):
 
     @staticmethod
     def CreateSignature(audio: Audio, description: list[str]) -> AudioSegment:
-        melody_waveform = torch.from_numpy(np.array(audio.raw_audio.get_array_of_samples(), float))
+        print('preparing signature')
+        melody_waveform = torch.from_numpy(np.array(audio.raw_audio.get_array_of_samples())).float()
         sr = audio.raw_audio.frame_rate
         melody_waveform = melody_waveform.unsqueeze(0).repeat(len(description), 1, 1)
         output = Ai.model.generate_with_chroma(
@@ -39,6 +40,7 @@ class Ai(object):
         # memory is an issue
         gc.collect()
         torch.cuda.empty_cache()
+        print('signature complete')
         return out_diffusion
 
 
@@ -51,7 +53,7 @@ class Ai(object):
 # 'EDM Electronic',
 # 'superb EDM Electronic',
 
-# melody_waveform, sr = torchaudio.load("Signature-4_016-withSilence.wav")
+melody_waveform, sr = torchaudio.load("Signature-4_016-withSilence.wav")
 # print(melody_waveform)
 # melody_wa
 # melody_waveform = melody_waveform.unsqueeze(0).repeat(8, 1, 1)
