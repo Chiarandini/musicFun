@@ -1,46 +1,40 @@
 {
     "q1": [
-        "question",
+        "Would you consider yourself a:",
         [
-            "a",
-            "b",
-            "c",
-            "d",
-            "e"
-        ]
+            "a) dreamer, loving to envision",
+			"b) hard worker, wanting to make something with your own two hands"
+		]
     ],
     "q2": [
-        "question",
+        "Would you consider yourself:",
         [
-            "a",
-            "b"
+            "a) ``in'' with the times, connected with the younger/est generation",
+            "b) becoming an old soul"
         ]
     ],
     "q3": [
-        "question",
+        "How would you like to spend your time:   ",
         [
-            "a",
-            "b",
-            "c",
-            "d"
+            "a) hanging out with many people",
+            "b) reading a book",
+            "c) watching an action movie",
+            "d) one-on-one with your best friend"
         ]
     ],
     "q4": [
-        "question",
+        "Would you consider yourself:",
         [
-            "a",
-            "b",
-            "c",
-            "d"
+            " a) jumping on new adventures",
+            "b) prioritizing a stable path",
+            "c) a mix of the two"
         ]
     ],
     "q5": [
-        "question",
+        "would you consider yourself:",
         [
-            "a",
-            "b",
-            "c",
-            "d"
+            " a) someone who would plough through a project",
+            "b) someone who would carefully consider all the edge cases before considering"
         ]
     ]
 }

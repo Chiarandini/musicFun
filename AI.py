@@ -21,7 +21,7 @@ class Ai(object):
     mbd = MultiBandDiffusion.get_mbd_musicgen()
 
     @staticmethod
-    def CreateSignature(audio: Audio, description: list[str]) -> AudioSegment:
+    def CreateSignature(audio: Audio, description: list[str]):
         print('preparing signature')
         melody_waveform = torch.from_numpy(np.array(audio.raw_audio.get_array_of_samples())).float()
         sr = audio.raw_audio.frame_rate

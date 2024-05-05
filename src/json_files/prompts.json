@@ -1,72 +1,44 @@
 {
     "q1": [
-        "question",
-        [
-            "a",
-            "b",
-            "c",
-            "d",
-            "e"
-        ],
-        {
-            "a": [
-                "adj1",
-                "adj2",
-                "adj3"
-            ],
-            "b": [
-                "adj1",
-                "adj2",
-                "adj3"
-            ],
-            "c": [
-                "adj1",
-                "adj2",
-                "adj3"
-            ],
-            "d": [
-                "adj1",
-                "adj2",
-                "adj3"
-            ],
-            "e": [
-                "adj1",
-                "adj2",
-                "adj3"
-            ]
-        }
-    ],
-    "q2": [
-        "question",
+        "Would you consider yourself: a) a dreamer, b) a hard worker",
         [
             "a",
             "b"
         ],
         {
             "a": [
-                "adj1",
-                "adj2",
-                "adj3"
+                "dreamy",
+                "excited",
+                "adventurous"
             ],
             "b": [
-                "adj1",
-                "adj2",
-                "adj3"
+                "rythmic",
+                "studious",
+                ""
+            ]
+        }
+    ],
+    "q2": [
+        "Would you consider yourself: a) ``in'' with the times, b) an old soul",
+        [
+            "a",
+            "b"
+        ],
+        {
+            "a": [
+                "EDM",
+                "electronic",
+                "pop"
             ],
-            "c": [
-                "adj1",
-                "adj2",
-                "adj3"
-            ],
-            "d": [
-                "adj1",
-                "adj2",
-                "adj3"
+            "b": [
+                "chamber orchetra, ",
+                "violin, ",
+                "piano, "
             ]
         }
     ],
     "q3": [
-        "question",
+        "How would you like to spend your time: a) hanging out with many people, b) reading a book, c) watching an action movie), one-on-one with your best friend,",
         [
             "a",
             "b",
@@ -75,86 +47,64 @@
         ],
         {
             "a": [
-                "adj1",
-                "adj2",
-                "adj3"
+                "friendly music",
+                "exciting music",
+                "fun music"
             ],
             "b": [
-                "adj1",
-                "adj2",
-                "adj3"
+                "relaxed music",
+                "melodic music",
+                "calming music"
             ],
             "c": [
-                "adj1",
-                "adj2",
-                "adj3"
+                "passionate music",
+                "powerful music",
+                "exciting music"
             ],
             "d": [
-                "adj1",
-                "adj2",
-                "adj3"
+                "intimate music",
+                "personal music",
+                "jazz music"
             ]
         }
     ],
     "q4": [
-        "question",
+        "Would you consider yourself: a) jumping on new adventures, b) prioritizing a stable path, c) a mix of the two",
         [
             "a",
             "b",
-            "c",
-            "d"
+            "c"
         ],
         {
             "a": [
-                "adj1",
-                "adj2",
-                "adj3"
+				"with lots of rythm",
+				"which is fast pace"
             ],
             "b": [
-                "adj1",
-                "adj2",
-                "adj3"
+                "which is slow and steady",
+                "wich has a consistent rythm"
             ],
             "c": [
-                "adj1",
-                "adj2",
-                "adj3"
-            ],
-            "d": [
-                "adj1",
-                "adj2",
-                "adj3"
+                ""
             ]
         }
     ],
     "q5": [
-        "question",
+        "would you consider yourself: a) someone who would plough through a project, b) someone who would carefully consider all the edge cases before considering",
         [
             "a",
-            "b",
-            "c",
-            "d"
+            "b"
         ],
         {
             "a": [
-                "adj1",
-                "adj2",
-                "adj3"
+                "and lots of energy",
+                "and lots of spirit",
+                "and lots of enthusiasm"
             ],
             "b": [
-                "adj1",
-                "adj2",
-                "adj3"
-            ],
-            "c": [
-                "adj1",
-                "adj2",
-                "adj3"
-            ],
-            "d": [
-                "adj1",
-                "adj2",
-                "adj3"
+                "and and feels peaceful",
+                "and feels like slow jazz",
+                "and is monotonous"
             ]
         }
     ]

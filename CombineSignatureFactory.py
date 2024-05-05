@@ -97,7 +97,7 @@ class CombineSignatureFactory:
         lengths_1 = [len(v) / 1000 for v in split_1]
         lengths_2 = [len(v) / 1000 for v in split_2]
 
-        half = sum([len(v) / 1000 for v in split_2]) / 2
+        half = (sum([len(v) / 1000 for v in split_2]) / 2) + 2
 
         # Find what is the closest the segments gets to the half-way point
 
