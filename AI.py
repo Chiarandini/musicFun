@@ -15,8 +15,8 @@ import torchaudio
 
 class Ai(object):
     duration = 10
-    model_type = 'melody'
-    model = musicgen.MusicGen.get_pretrained('melody', device='cuda')
+    model_type = 'facebook/musicgen-melody'
+    model = musicgen.MusicGen.get_pretrained(model_type, device='cuda')
     model.set_generation_params(duration=duration)
     mbd = MultiBandDiffusion.get_mbd_musicgen()
 
