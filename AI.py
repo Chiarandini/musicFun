@@ -15,7 +15,7 @@ import torchaudio
 
 class Ai(object):
     duration = 10
-    model_type = 'facebook/musicgen-melody'
+    model_type = 'melody' # To take up less CUDA space
     model = musicgen.MusicGen.get_pretrained(model_type, device='cuda')
     model.set_generation_params(duration=duration)
     mbd = MultiBandDiffusion.get_mbd_musicgen()
